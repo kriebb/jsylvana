@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config>
+
+    <managed-bean>
+        <managed-bean-name>projectOpgave</managed-bean-name>
+        <managed-bean-class>managedBean.ProjectOpgave</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <description>
+
+        </description>
+        <from-view-id>/Admin/ProjectOpgave.jsp</from-view-id>
+        <navigation-case>
+            <from-action>#{projectOpgave.vulSelectedItemsProjecten}</from-action>            
+            <from-outcome>success</from-outcome>
+            <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+        </navigation-case>
+
+    </navigation-rule>
+  
+    
+  
+</faces-config>
