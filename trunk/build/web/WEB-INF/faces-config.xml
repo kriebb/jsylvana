@@ -12,21 +12,53 @@
     <managed-bean>
         <managed-bean-name>projectOpgave</managed-bean-name>
         <managed-bean-class>managedBean.ProjectOpgave</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>docentTeam</managed-bean-name>
+        <managed-bean-class>managedBean.DocentTeam</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
+        <managed-bean>
+        <managed-bean-name>student</managed-bean-name>
+        <managed-bean-class>managedBean.Student</managed-bean-class>
+        <managed-bean-scope>Session</managed-bean-scope>
+    </managed-bean>
+    
     <navigation-rule>
         <description>
 
         </description>
         <from-view-id>/Admin/ProjectOpgave.jsp</from-view-id>
         <navigation-case>
-            <from-action>#{projectOpgave.vulSelectedItemsProjecten}</from-action>            
-            <from-outcome>success</from-outcome>
+            <from-action>#{projectOpgave.ddlProject.dllProjectChanged}</from-action>                        
             <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
         </navigation-case>
 
     </navigation-rule>
-  
+    <navigation-rule>
+        <description>
+            
+        </description>
+        <from-view-id>/Admin/DocentTeam.jsp</from-view-id>
+                <navigation-case>
+            <from-action>#{docentTeam.ddlProjectOpgave.ddlProjectOpgaveChanged}</from-action>                        
+            <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>
+            
+        </description>
+        <from-view-id>/Admin/Student.jsp</from-view-id>
+                <navigation-case>
+            <from-action>#{student.ddlProjectOpgave.ddlProjectOpgaveChanged}</from-action>                        
+            <to-view-id>/Admin/Student.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
     
   
 </faces-config>

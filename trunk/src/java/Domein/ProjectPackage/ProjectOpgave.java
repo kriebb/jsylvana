@@ -109,6 +109,6 @@ public class ProjectOpgave
 	
 	public String toString()
 	{
-		return this.opgaveTitel;	
+		return this.opgaveTitel + " " +this.getProject().getProjectTitel()+ this.getProjectID();	
 	}
 }

@@ -30,27 +30,27 @@ public class ProjectBeheerder
         return GetProjectenDictionary().values();           
     }
 
-/*    public Map<Integer, Project> GetProjectenDictionaryByStudent(String studentnr)
+    public Map<Integer, Project> GetProjectenDictionaryByStudent(String studentnr)
     {
         Map<Integer, Project> project_student = (Map<Integer, Project>)Cache.getFromCache("project_"+studentnr);
          if (project_student == null)
          {
-             Student student = (Student) Cache.getFromCache("student_" + studentnr);
-             if (student == null)
+    //        Student student = (Student) Cache.getFromCache("student_" + studentnr);
+     //        if (student == null)
              {
-                 student = SqlStudentProvider.getInstance().GetStudentByID(studentnr);
-                 Cache.putInCache("student_" + studentnr,student);
+      //           student = SqlStudentProvider.getInstance().GetStudentByID(studentnr);
+       //          Cache.putInCache("student_" + studentnr,student);
              }
-             project_student = SqlProjectProvider.getInstance().GetProjectenByStudent(student);
+     //        project_student = SqlProjectProvider.getInstance().GetProjectenByStudent(student);
              Cache.putInCache("project_" + studentnr,project_student);
          }
          return project_student;
-     }*/
+     }
 
-    /*public Collection<Project> GetProjectenByStudent(String studentnr)
+    public Collection<Project> GetProjectenByStudent(String studentnr)
     {
         return GetProjectenDictionaryByStudent(studentnr).values();
-    }*/
+    }
 
     public Map<Integer, ProjectOpgave> GetOpgavenByProjectIdDictionary(int projectid)
     {

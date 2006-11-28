@@ -22,14 +22,19 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <h1>ProjectOpgave</h1>
     <f:view>
         <h:form>
-            <h:selectOneMenu id="ddlProject" 
-                value="#{projectOpgave.selectedProjectID}" >
-                    <f:selectItems value="#{projectOpgave.projecten}"/>
-            </h:selectOneMenu>
-           <h:commandButton value="Selecteer Project" action="#{projectOpgave.vulSelectedItemsProjecten}"></h:commandButton>
+   <h:selectOneMenu 
+       id="ddlProjecten" 
+       immediate="true" 
+       onchange="this.form.submit();" 
+       valueChangeListener="#{projectOpgave.ddlProject.ddlProjectChanged}" 
+       value="#{projectOpgave.ddlProject.selectedProjectID}" >
+            <f:selectItems value="#{projectOpgave.ddlProject.projecten}"/>
+    </h:selectOneMenu>
+
+    <br/><br/>
+
         </h:form>
         
-           U koos voor projectid ${projectOpgave.selectedProjectID}
     </f:view>    
     </body>
 </html>

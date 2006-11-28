@@ -372,7 +372,7 @@ public class SqlProjectProvider
 			while(rs.next()) 
 			{
 				ProjectOpgave po = getProjectOpgave(rs);
-				mapPo.put(po.getProjectID(),po);
+				mapPo.put(po.getOpgaveId(),po);
 			}
 			stmt.close();
 			rs.close();

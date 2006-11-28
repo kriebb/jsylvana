@@ -49,7 +49,7 @@ public class TestOurConnectionPool{
 	private static SimpleConnectionPool pool;
 
         public static void main(String args[])
-        {
+        {/*
         	ProjectOpgave po = new ProjectOpgave(1,"titeltjesfUpdate",null,0,0,4);
         	System.out.println(SqlProjectProvider.getInstance().UpdateProjectOpgave(po));
         	System.out.println(SqlProjectProvider.getInstance().GetProjecten());
@@ -73,6 +73,8 @@ public class TestOurConnectionPool{
         	System.out.println(SqlProjectProvider.getInstance().HardDeleteProjectOpgave(po.getOpgaveId()));
         	System.out.println(SqlProjectProvider.getInstance().GetProjectOpgaven());
         	System.out.println(SqlProjectProvider.getInstance().GetProjectenByStudent(new Student(200600001,"","","","","",false) ));
-        	
+        */	
+            	System.out.println(SqlProjectProvider.getInstance().GetProjectOpgavenByProjectID(4));
+                System.out.println(SqlProjectProvider.getInstance().GetProjectOpgaven());
         }
 }
