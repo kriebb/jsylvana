@@ -26,13 +26,57 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
        id="ddlProjecten" 
        immediate="true" 
        onchange="this.form.submit();" 
-       valueChangeListener="#{projectOpgave.ddlProject.ddlProjectChanged}" 
-       value="#{projectOpgave.ddlProject.selectedProjectID}" >
-            <f:selectItems value="#{projectOpgave.ddlProject.projecten}"/>
+       valueChangeListener="#{viewProjectOpgave.ddlProject.ddlProjectChanged}" 
+       value="#{viewProjectOpgave.ddlProject.selectedProjectID}" >
+            <f:selectItems value="#{viewProjectOpgave.ddlProject.projecten}"/>
     </h:selectOneMenu>
+    <br/><br/>
+          
+        <div align="center">...ProjectOpgaven...</div> 
+        <h:dataTable value="#{viewProjectOpgave.projectOpgaveBySelectedProjectID}" 
+                      var="po">        
+           <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Titel"></h:outputText>
+                </f:facet>
+                <h:outputText value="#{po.opgaveTitel}"/>                  
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:outputText value="Omschrijving"></h:outputText>
+                </f:facet>
+                <h:outputText value="#{po.korteOmschrijving}"/>                  
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:outputText value="Aantal Groepen"></h:outputText>
+                </f:facet>
+                <h:outputText value="#{po.aantalGroepen}"/>                  
+            </h:column>
+            <h:column>
+                <f:facet name="header" >
+                    <h:outputText value="Aantal studenten / groep"></h:outputText>
+                </f:facet>
+                <h:outputText value="#{po.aantalStudentenPerGroep}"/>                  
+            </h:column>
+               <h:column>
 
+                  <h:commandLink value="Edit" actionListener="#{viewProjectOpgave.editCurrentRow}">
+                          <f:param  name="selectRow" value="#{po.opgaveId}"></f:param>     
+                      </h:commandLink>
+               </h:column>
+        </h:dataTable>
+        <br/>
+            Titel: <h:inputText id="inputTitel" value="#{viewProjectOpgave.selectedProjectOpgave.opgaveTitel}"></h:inputText><br/>
+            Korte Omschrijving:<h:inputText id="inputOmschrijving" value="#{viewProjectOpgave.selectedProjectOpgave.korteOmschrijving}"></h:inputText><br/>
+            Aantal Groepen: <h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}"></h:inputText><br/>
+            Aantal Studenten Per Groep:<h:inputText id="inputStudenten" value="#{viewProjectOpgave.selectedProjectOpgave.aantalStudentenPerGroep}"></h:inputText><br/>
+        <br/>
+        
+        
     <br/><br/>
 
+    
         </h:form>
         
     </f:view>    
