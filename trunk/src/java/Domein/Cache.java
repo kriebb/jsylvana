@@ -9,20 +9,26 @@ public class Cache
 	
 	public static void putInCache(String key, Object value)
 	{
-		cachelijst.put(key,value);
+		//cachelijst.put(key,value);
 	}
 	
 	public static Object getFromCache(String key)
 	{
-		return cachelijst.get(key);
+		return null;//return cachelijst.get(key);
 	}
 	
 	public static void purgeCache(String key)
 	{
-		for (Map.Entry<String, Object> item : cachelijst.entrySet())
-        {
-            if (item.getKey().startsWith(key))
-               cachelijst.remove(item.getKey());
-        }
+          /*
+            if(!cachelijst.isEmpty())
+            {
+                for (Map.Entry<String, Object> item : cachelijst.entrySet())
+                {
+                    if (item.getKey().startsWith(key))
+                       cachelijst.remove(item.getKey());
+                }
+            }
+           **/
 	}
+           
 }

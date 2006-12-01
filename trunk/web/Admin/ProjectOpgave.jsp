@@ -60,7 +60,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                 <h:outputText value="#{po.aantalStudentenPerGroep}"/>                  
             </h:column>
            <h:column>
-              <h:commandLink value="Edit" action="#{viewProjectOpgave.editCurrentRow}"> <!--mag geen immediate=true zijn! Omdat anders de pagina niet goed gerenderd wordt!-->
+              <h:commandLink value="Edit" actionListener="#{viewProjectOpgave.editCurrentRow}"> <!--mag geen immediate=true zijn! Omdat anders de pagina niet goed gerenderd wordt!-->
                       <f:param  name="selectRow" value="#{po.opgaveId}"></f:param>     
                   </h:commandLink>
            </h:column>
