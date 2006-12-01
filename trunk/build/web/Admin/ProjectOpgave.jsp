@@ -22,19 +22,20 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
     <h1>ProjectOpgave</h1>
     <f:view>
         <h:form>
-   <h:selectOneMenu 
+       <!--immidiate="true" -->
+            <h:selectOneMenu 
        id="ddlProjecten" 
-       immediate="true" 
+
        onchange="this.form.submit();" 
        valueChangeListener="#{viewProjectOpgave.ddlProject.ddlProjectChanged}" 
        value="#{viewProjectOpgave.ddlProject.selectedProjectID}" >
             <f:selectItems value="#{viewProjectOpgave.ddlProject.projecten}"/>
     </h:selectOneMenu>
     <br/><br/>
-          
-        <div align="center">...ProjectOpgaven...</div> 
+          <h:outputText rendered="#{viewProjectOpgave.beperkteEditModus}" value="U bevindt zich in beperkte Editmodus: Inschrijvingen zijn begonnen"/>
         <h:dataTable value="#{viewProjectOpgave.projectOpgaveBySelectedProjectID}" 
-                      var="po" rendered="#{viewProjectOpgave.ddlProject.selectedProjectID>-1}" >        
+                      var="po" rendered="#{viewProjectOpgave.ddlProject.selectedProjectID>-1}" 
+                       title="...ProjectOpgaven...">        
            <h:column>
                 <f:facet name="header">
                     <h:outputText value="Titel"></h:outputText>
@@ -73,7 +74,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         <br/>
             <h:commandButton rendered="#{viewProjectOpgave.insertMode &&  viewProjectOpgave.ddlProject.selectedProjectID>-1}" actionListener="#{viewProjectOpgave.toggleInsertMode}"  value="Maak projectOpgave"/>
         <br/>
-            <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible}">
+            <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible &&  viewProjectOpgave.ddlProject.selectedProjectID>-1}">
             <h:outputText value="Titel:"/> <h:inputText  id="inputTitel"  value="#{viewProjectOpgave.selectedProjectOpgave.opgaveTitel}" ></h:inputText><br/>
             <h:outputText value="Korte Omschrijving:"/> <h:inputText id="inputOmschrijving" value="#{viewProjectOpgave.selectedProjectOpgave.korteOmschrijving}"></h:inputText><br/>
             <h:outputText value="Aantal Groepen:"/>  <h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}"></h:inputText><br/>
