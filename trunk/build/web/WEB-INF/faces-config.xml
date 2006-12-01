@@ -5,12 +5,12 @@
   <managed-bean>
     <managed-bean-name>viewProjectOpgave</managed-bean-name>
     <managed-bean-class>managedBean.ViewProjectOpgave</managed-bean-class>
-    <managed-bean-scope>application</managed-bean-scope>
+    <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>docentTeam</managed-bean-name>
     <managed-bean-class>managedBean.DocentTeam</managed-bean-class>
-    <managed-bean-scope>application</managed-bean-scope>
+    <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>student</managed-bean-name>

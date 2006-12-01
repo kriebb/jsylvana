@@ -80,6 +80,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
             <h:outputText value="Aantal Studenten Per Groep:"/> <h:inputText id="inputStudenten" value="#{viewProjectOpgave.selectedProjectOpgave.aantalStudentenPerGroep}"></h:inputText><br/>
             <h:commandLink actionListener="#{viewProjectOpgave.checkEdit}" rendered="#{viewProjectOpgave.editMode}"  value="Edit"/>
             <h:commandLink actionListener="#{viewProjectOpgave.checkInsert}" rendered="#{viewProjectOpgave.insertMode}"  value="Insert" />
+          
             <h:commandLink actionListener="#{viewProjectOpgave.cancel}"  value="Cancel"/>             
             </f:subview>
          <br/>
