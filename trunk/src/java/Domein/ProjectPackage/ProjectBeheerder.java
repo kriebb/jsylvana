@@ -1,5 +1,6 @@
 package Domein.ProjectPackage;
 
+import Utils.ApplicationException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -97,7 +98,7 @@ public class ProjectBeheerder
     }
 
     /** KRS: CODE AANGEPAST*/
-    public Boolean MakeProjectOpgave(ProjectOpgave opgave) throws Exception
+    public Boolean MakeProjectOpgave(ProjectOpgave opgave) throws ApplicationException
     {
         Cache.purgeCache("projectopgave_projectid=" + opgave.getProjectID());
         if (normalValidation(opgave))
@@ -106,11 +107,11 @@ public class ProjectBeheerder
         }
         else
         {
-            throw new Exception("de validatie van de opgave is niet correct verlopen");
+            throw new ApplicationException("de validatie van de opgave is niet correct verlopen");
         }
     }
 
-    public Boolean UpdateProjectOpgave(ProjectOpgave opgave) throws Exception
+    public Boolean UpdateProjectOpgave(ProjectOpgave opgave) throws ApplicationException
     {
         if (validatie(opgave))
         {
@@ -119,19 +120,19 @@ public class ProjectBeheerder
         }
         else
         {
-            throw new Exception("de validatie van de opgave is niet correct verlopen");
+            throw new ApplicationException("de validatie van de opgave is niet correct verlopen");
         }
     }
 
 
 
-    public Boolean DeleteProjectOpgave(ProjectOpgave opgave) throws Exception
+    public Boolean DeleteProjectOpgave(ProjectOpgave opgave) throws ApplicationException
     {
         if (opgave.getProject().inschrijvingBegonnen()
              && !opgave.getProject().inschrijvingGedaan())
         {
 
-            throw new Exception("De applicatie weigert de opgave te verwijderen! Gelieve de inschrijvingsperiode aan te passen of geduld te oefenen tot deze verlopen is!");
+            throw new ApplicationException("De applicatie weigert de opgave te verwijderen! Gelieve de inschrijvingsperiode aan te passen of geduld te oefenen tot deze verlopen is!");
 
         }
         else
@@ -141,10 +142,10 @@ public class ProjectBeheerder
                 Cache.purgeCache("projectopgave_projectid=" + opgave.getProjectID());
                 return SqlProjectProvider.getInstance().DeleteProjectOpgave(opgave.getOpgaveId());
             }
-            throw new Exception("Fout in de de validatie van een opgave die wordt verwijderdt!");
+            throw new ApplicationException("Fout in de de validatie van een opgave die wordt verwijderdt!");
         }
     }
-    public Boolean HardDeleteProjectOpgave(ProjectOpgave opgave) throws Exception
+    public Boolean HardDeleteProjectOpgave(ProjectOpgave opgave) throws ApplicationException
     {
         if (validatie(opgave))
         {
@@ -153,35 +154,35 @@ public class ProjectBeheerder
         }
         else
         {
-            throw new Exception("de validatie van de opgave is niet correct verlopen");
+            throw new ApplicationException("de validatie van de opgave is niet correct verlopen");
         }
     }
 
-    private Boolean validatie(ProjectOpgave opgave) throws Exception
+    private Boolean validatie(ProjectOpgave opgave) throws ApplicationException
     {
         ProjectOpgave vorigeOpgave = this.GetOpgaveByProjectID_OpgaveID(opgave.getProjectID(), opgave.getOpgaveId());
         if (opgave.getProject().inschrijvingBegonnen())
         {
             if (opgave.getAantalGroepen() < vorigeOpgave.getAantalGroepen())
-            { throw new Exception("Je mag de aantal groepen(" + opgave.getAantalGroepen() + ") niet meer verkleinen. Uw vorige waarde was:" + vorigeOpgave.getAantalGroepen()); }
+            { throw new ApplicationException("Je mag de aantal groepen(" + opgave.getAantalGroepen() + ") niet meer verkleinen. Uw vorige waarde was:" + vorigeOpgave.getAantalGroepen()); }
             if (opgave.getAantalStudentenPerGroep() != vorigeOpgave.getAantalStudentenPerGroep())
-            { throw new Exception("Je mag het aantal studenten per groep(" + opgave.getAantalStudentenPerGroep() + ") niet meer wijzigen. Uw vorige waarde was:" + vorigeOpgave.getAantalStudentenPerGroep()); }
+            { throw new ApplicationException("Je mag het aantal studenten per groep(" + opgave.getAantalStudentenPerGroep() + ") niet meer wijzigen. Uw vorige waarde was:" + vorigeOpgave.getAantalStudentenPerGroep()); }
         }
         return normalValidation(opgave);
 
     }
-    private Boolean normalValidation(ProjectOpgave opgave) throws Exception
+    private Boolean normalValidation(ProjectOpgave opgave) throws ApplicationException
     {
         if (opgave.getAantalGroepen() < 0)
-        { throw new Exception("Aantal groepen mogen niet < 0; Uw waarde was:" + opgave.getAantalGroepen()); }
+        { throw new ApplicationException("Aantal groepen mogen niet < 0; Uw waarde was:" + opgave.getAantalGroepen()); }
         if (opgave.getAantalStudentenPerGroep() < 0)
-        { throw new Exception("Aantal studenten per groep mogen niet < 0;Uw waarde was:" + opgave.getAantalStudentenPerGroep()); }
+        { throw new ApplicationException("Aantal studenten per groep mogen niet < 0;Uw waarde was:" + opgave.getAantalStudentenPerGroep()); }
         if (opgave.getOpgaveTitel().equals(""))
-        { throw new Exception("Er moet een opgavetitel bekend zijn. U heeft een lege titel gegeven"); }
+        { throw new ApplicationException("Er moet een opgavetitel bekend zijn. U heeft een lege titel gegeven"); }
 
         if (opgave.getProject() == null)
         {
-            throw new Exception("Er moet voor een project gekozen zijn! U koos niet voor een project!");
+            throw new ApplicationException("Er moet voor een project gekozen zijn! U koos niet voor een project!");
         }
         return true;
     }

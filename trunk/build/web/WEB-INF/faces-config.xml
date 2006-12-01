@@ -17,20 +17,37 @@
     <managed-bean-class>managedBean.Student</managed-bean-class>
     <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
+  
   <navigation-rule>
     <description>
-
-        </description>
+     Als je een project kiest, moet er een autopostback gebeuren
+     </description>
     <from-view-id>/Admin/ProjectOpgave.jsp</from-view-id>
     <navigation-case>
       <from-action>#{viewProjectOpgave.ddlProject.dllProjectChanged}</from-action>
       <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
     </navigation-case>
-  </navigation-rule>
+    <navigation-case>
+        <from-action>viewProjectOpgave.editCurrentRow</from-action>
+        <from-outcome>success</from-outcome>
+        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+    </navigation-case>
+        <navigation-case>
+        <from-action>viewProjectOpgave.deleteCurrentRow</from-action>
+        <from-outcome>success</from-outcome>
+        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+    </navigation-case>
+            <navigation-case>
+        <from-action>viewProjectOpgave.checkInsert</from-action>
+        <from-outcome>success</from-outcome>
+        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+    </navigation-case>
+</navigation-rule>
+  
   <navigation-rule>
     <description>
-            
-        </description>
+        Als je een projectopgave kiest, moet er een autopostback gebeuren
+     </description>
     <from-view-id>/Admin/DocentTeam.jsp</from-view-id>
     <navigation-case>
       <from-action>#{docentTeam.ddlProjectOpgave.ddlProjectOpgaveChanged}</from-action>
@@ -39,7 +56,7 @@
   </navigation-rule>
   <navigation-rule>
     <description>
-            
+            Als je een projectopgave kiest, moet er een autopostback gebeuren
         </description>
     <from-view-id>/Admin/Student.jsp</from-view-id>
     <navigation-case>
@@ -47,4 +64,5 @@
       <to-view-id>/Admin/Student.jsp</to-view-id>
     </navigation-case>
   </navigation-rule>
+  
 </faces-config>
