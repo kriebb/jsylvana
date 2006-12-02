@@ -25,7 +25,6 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
        <!--immidiate="true" -->
             <h:selectOneMenu 
        id="ddlProjecten" 
-
        onchange="this.form.submit();" 
        valueChangeListener="#{viewProjectOpgave.ddlProject.ddlProjectChanged}" 
        value="#{viewProjectOpgave.ddlProject.selectedProjectID}" >
@@ -60,10 +59,11 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                 </f:facet>
                 <h:outputText value="#{po.aantalStudentenPerGroep}"/>                  
             </h:column>
-           <h:column>
-              <h:commandLink value="Edit" actionListener="#{viewProjectOpgave.editCurrentRow}"> <!--mag geen immediate=true zijn! Omdat anders de pagina niet goed gerenderd wordt!-->
+           <h:column>              
+              <h:commandLink value="Edit"  rendered="#{po.opgaveId != viewProjectOpgave.selectRow}" actionListener="#{viewProjectOpgave.editCurrentRow}"> <!--mag geen immediate=true zijn! Omdat anders de pagina niet goed gerenderd wordt!-->
                       <f:param  name="selectRow" value="#{po.opgaveId}"></f:param>     
-                  </h:commandLink>
+              </h:commandLink>
+                  <h:outputText value="Edit" rendered="#{po.opgaveId == viewProjectOpgave.selectRow}"></h:outputText>
            </h:column>
            <h:column>
                 <h:commandLink actionListener="#{viewProjectOpgave.checkDeleteCurrentRow}" value="Delete">
@@ -74,7 +74,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         <br/>
             <h:commandButton rendered="#{viewProjectOpgave.insertMode &&  viewProjectOpgave.ddlProject.selectedProjectID>-1}" actionListener="#{viewProjectOpgave.toggleInsertMode}"  value="Maak projectOpgave"/>
         <br/>
-            <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible &&  viewProjectOpgave.ddlProject.selectedProjectID>-1}">
+            <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible &&  viewProjectOpgave.ddlProject.selectedProjectID>-1 && !viewProjectOpgave.projectVeranderd}">
             <h:outputText value="Titel:"/> <h:inputText  id="inputTitel"  value="#{viewProjectOpgave.selectedProjectOpgave.opgaveTitel}" ></h:inputText><br/>
             <h:outputText value="Korte Omschrijving:"/> <h:inputText id="inputOmschrijving" value="#{viewProjectOpgave.selectedProjectOpgave.korteOmschrijving}"></h:inputText><br/>
             <h:outputText value="Aantal Groepen:"/>  <h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}"></h:inputText><br/>

@@ -197,7 +197,7 @@ public class SqlProjectProvider
 			con.setAutoCommit(true);
 			stmt = con.prepareCall("{ call usp_ProjectOpgave_Insert(?,?,?,?,?,?) }");
             stmt.setString("p_opgaveTitel",projectopgave.getOpgaveTitel());
-            stmt.setString("p_korteOmschrijving", projectopgave.getKorteOmschrijving());
+            stmt.setString("p_korteOmschrijving",(projectopgave.getKorteOmschrijving()==""?null:projectopgave.getKorteOmschrijving()));
             stmt.setInt("p_aantalStudentenPerGroep", projectopgave.getAantalStudentenPerGroep());
             stmt.setInt("p_aantalGroepen", projectopgave.getAantalGroepen());
             stmt.setInt("p_projectID", projectopgave.getProject().getProjectId());
