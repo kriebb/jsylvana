@@ -11,14 +11,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>PAS: Student</title>
-    </head>
-    <body>
-
+<%@ include file="../MasterPage/top.html" %>
     <h1>Student</h1>
     
     <f:view>
@@ -28,24 +21,24 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
        id="ddlProjecten" 
        immediate="true" 
        onchange="this.form.submit();" 
-       valueChangeListener="#{ddlProjectOpgave.ddlProjectChanged}" 
-       value="#{ddlProjectOpgave.selectedProjectID}" >
-            <f:selectItems value="#{ddlProjectOpgave.projecten}"/>
+       valueChangeListener="#{student.ddlProjectOpgave.ddlProjectChanged}" 
+       value="#{student.ddlProjectOpgave.selectedProjectID}" >
+            <f:selectItems value="#{student.ddlProjectOpgave.projecten}"/>
     </h:selectOneMenu>
     <br /><br />
     <!--Moet die daar staan?die immidiate?-->
         <h:selectOneMenu id="ddlProjectOpgaven" 
         immediate="true" 
-        rendered="#{ddlProjectOpgave.selectedProjectID > -1}"
+        rendered="#{student.ddlProjectOpgave.selectedProjectID > -1}"
         onchange="this.form.submit();" 
-        valueChangeListener="#{ddlProjectOpgave.ddlProjectOpgaveChanged}" 
-        value="#{ddlProjectOpgave.selectedProjectOpgaveID}" >
-            <f:selectItems value="#{ddlProjectOpgave.projectOpgaven}"/>
+        valueChangeListener="#{student.ddlProjectOpgave.ddlProjectOpgaveChanged}" 
+        value="#{student.ddlProjectOpgave.selectedProjectOpgaveID}" >
+            <f:selectItems value="#{student.ddlProjectOpgave.projectOpgaven}"/>
         </h:selectOneMenu>
     
             
             
           
         </h:form>
-    </f:view>       </body>
-</html>
+    </f:view>
+    <%@ include file="../MasterPage/bottom.html" %>
