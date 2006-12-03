@@ -414,9 +414,11 @@
         <copy-ear-war file="${file.reference.ehcache-1.2.4RC.jar}" propname="included.lib.file.reference.ehcache-1.2.4RC.jar.X"/>
         <basename property="included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar" file="${file.reference.mysql-connector-java-5.0.4-bin.jar}"/>
         <copy-ear-war file="${file.reference.mysql-connector-java-5.0.4-bin.jar}" propname="included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar.X"/>
+        <basename property="included.lib.file.reference.clientvalidators-0.9.1.jar" file="${file.reference.clientvalidators-0.9.1.jar}"/>
+        <copy-ear-war file="${file.reference.clientvalidators-0.9.1.jar}" propname="included.lib.file.reference.clientvalidators-0.9.1.jar.X"/>
         <mkdir dir="${build.web.dir.real}/META-INF"/>
         <manifest file="${build.web.dir.real}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} "/>
+            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} ${included.lib.file.reference.clientvalidators-0.9.1.jar} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
@@ -431,6 +433,7 @@
         <copy file="${libs.jstl11.classpath.libfile.1}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${file.reference.ehcache-1.2.4RC.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${file.reference.mysql-connector-java-5.0.4-bin.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${file.reference.clientvalidators-0.9.1.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
     </target>
     <target name="do-ear-dist" depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest">
         <dirname property="dist.jar.dir" file="${dist.ear.war}"/>
