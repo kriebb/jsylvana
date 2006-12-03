@@ -42,6 +42,43 @@ public class ViewProjectOpgave
         this.vorigProject=ddlProject.getSelectedProjectID();
     }
     
+//<h:commandButton rendered="#{viewProjectOpgave.hardDeleteEnabled}" actionListener="#{viewProjectOpgave.hardDelete}"  value="Hard delete"/>    
+    
+    private boolean hardDeleteEnabled = false;
+    
+    public void hardDelete(ActionEvent e)
+    {
+        boolean result =false;
+        setDrilldownTableVisible(false);
+        try
+        {
+            result = DomeinController.getInstance().getProjectBeheerder().HardDeleteProjectOpgave(DomeinController.getInstance().getProjectBeheerder().GetOpgaveByProjectID_OpgaveID(this.getDdlProject().getSelectedProjectID(),this.selectRow));
+        }
+        catch(ApplicationException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
+            result = false;
+        }
+        finally
+        {
+            if(!result)
+            {
+                FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage("Mislukt. U kunt dit projectopgave momenteel niet verwijderen. Probeer het later opnieuw"));
+            }
+            else
+            {
+                FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage("Gelukt!"));
+            }
+            this.hardDeleteEnabled=false;
+            this.insertMode=true;
+            FacesContext.getCurrentInstance().renderResponse();
+        }    
+    }
+    
+    public boolean isHardDeleteEnabled()
+    {
+        return hardDeleteEnabled;
+    }
     public DdlProject getDdlProject()
     {
         return ddlProject;
@@ -62,6 +99,7 @@ public class ViewProjectOpgave
         selectRow = Integer.parseInt((String)FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectRow"));
         vorigProject = ddlProject.getSelectedProjectID();
         setDrilldownTableVisible(true);
+        this.hardDeleteEnabled=false;
         setEditMode(true);
         setInsertMode(false);        
         this.updatedOpgave=null;
@@ -73,6 +111,7 @@ public class ViewProjectOpgave
         setDrilldownTableVisible(false);
         setEditMode(false);
         setInsertMode(true);
+        this.hardDeleteEnabled=false;
         this.updatedOpgave=null;
         this.createdOpgave=null;
         FacesContext.getCurrentInstance().renderResponse();
@@ -108,8 +147,9 @@ public class ViewProjectOpgave
                 insertMode=true;
                 this.updatedOpgave=null;
                 selectRow=-1;
-
             }
+            this.hardDeleteEnabled=false;
+            
             FacesContext.getCurrentInstance().renderResponse();
         }
         
@@ -155,6 +195,7 @@ public class ViewProjectOpgave
                 insertMode=true;
                 this.createdOpgave=null;
             }
+            this.hardDeleteEnabled=false;
             FacesContext.getCurrentInstance().renderResponse();
         }
         
@@ -177,13 +218,16 @@ public class ViewProjectOpgave
         {
             if(!result)
             {
-                FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage("Mislukt"));
+                FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage("Mislukt. U kunt altijd eens de 'Hard Delete' proberen"));
+                this.hardDeleteEnabled=true;
+                this.insertMode=false;
             }
             else
             {
+                this.hardDeleteEnabled=false;
+                this.insertMode=true;
                 FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage("Gelukt!"));
             }
-
             FacesContext.getCurrentInstance().renderResponse();
 
         }
