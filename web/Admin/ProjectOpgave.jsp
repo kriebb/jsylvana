@@ -63,10 +63,11 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                   <h:graphicImage  value="../Images/View.gif" rendered="#{po.opgaveId == viewProjectOpgave.selectRow}"></h:graphicImage>
            </h:column>
            <h:column>
-                <h:commandLink actionListener="#{viewProjectOpgave.checkDeleteCurrentRow}" value="<img alt='delete' src='../Images/icon-delete.gif' border='0'/>">
+                <h:commandButton onclick="if (confirm('Ben je zeker deze projectopgave te verwijderen?') == false) return false;" actionListener="#{viewProjectOpgave.checkDeleteCurrentRow}" image="../Images/icon-delete.gif">
                   <f:param  name="deleteRow" value="#{po.opgaveId}"></f:param>     
-                </h:commandLink>
-            </h:column>
+                </h:commandButton>
+
+               </h:column>
         </h:dataTable>
             <h:commandButton styleClass="button" rendered="#{viewProjectOpgave.insertMode &&  viewProjectOpgave.ddlProject.selectedProjectID>-1}" actionListener="#{viewProjectOpgave.toggleInsertMode}"  value="Maak projectOpgave"/>
             <h:commandButton styleClass="button" rendered="#{!viewProjectOpgave.insertMode &&  viewProjectOpgave.ddlProject.selectedProjectID>-1 && viewProjectOpgave.hardDeleteEnabled}" actionListener="#{viewProjectOpgave.hardDelete}"  value="Hard delete"/>
