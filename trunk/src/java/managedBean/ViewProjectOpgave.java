@@ -42,7 +42,6 @@ public class ViewProjectOpgave
         this.vorigProject=ddlProject.getSelectedProjectID();
     }
     
-//<h:commandButton rendered="#{viewProjectOpgave.hardDeleteEnabled}" actionListener="#{viewProjectOpgave.hardDelete}"  value="Hard delete"/>    
     
     private boolean hardDeleteEnabled = false;
     
