@@ -1,12 +1,13 @@
 package Domein;
 
 
+import Domein.DocentPackage.DocentBeheerder;
 import Domein.ProjectPackage.ProjectBeheerder;
 
 
 public class DomeinController
 {
-	//private DocentBeheerder docentBeheerder;
+    private DocentBeheerder docentBeheerder;
     private ProjectBeheerder projectBeheerder;
     //private StudentBeheerder studentBeheerder;
 
@@ -42,7 +43,7 @@ public class DomeinController
             }
             return studentBeheerder;
     }
-
+*/
     public DocentBeheerder getDocentBeheerder()
     {
             if (docentBeheerder == null)
@@ -50,5 +51,5 @@ public class DomeinController
                 docentBeheerder = new DocentBeheerder();
             }
             return docentBeheerder;
-    }*/
+    }
 }

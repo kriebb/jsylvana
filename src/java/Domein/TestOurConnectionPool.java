@@ -1,18 +1,17 @@
 package Domein;
 
-import Domein.ProjectPackage.Project;
-import Domein.ProjectPackage.ProjectOpgave;
-import Domein.StudentPackage.Student;
+import Domein.DocentPackage.Docent;
 import Persistentie.SimpleConnectionPool;
-import Persistentie.SqlProjectProvider;
+import Persistentie.SqlDocentProvider;
 
 import java.sql.*;
+import java.util.Map;
 
 public class TestOurConnectionPool{
 	
         public TestOurConnectionPool()
         {
-    		pool = SimpleConnectionPool.getInstance("jdbc:mysql:///projecten?zeroDateTimeBehavior=convertToNull", "kristof", "riebbels1","com.mysql.jdbc.Driver", 30);            
+    		pool = SimpleConnectionPool.getInstance("jdbc:mysql:///projecten?zeroDateTimeBehavior=convertToNull", "frederik", "bracke","com.mysql.jdbc.Driver", 30);            
     		Connection con = pool.getConnection();
     		if (con == null) {
     			System.out.println("Can't receive connection!");
@@ -73,8 +72,11 @@ public class TestOurConnectionPool{
         	System.out.println(SqlProjectProvider.getInstance().HardDeleteProjectOpgave(po.getOpgaveId()));
         	System.out.println(SqlProjectProvider.getInstance().GetProjectOpgaven());
         	System.out.println(SqlProjectProvider.getInstance().GetProjectenByStudent(new Student(200600001,"","","","","",false) ));
-        */	
             	System.out.println(SqlProjectProvider.getInstance().GetProjectOpgavenByProjectID(4));
                 System.out.println(SqlProjectProvider.getInstance().GetProjectOpgaven());
+          */
+                Map<String,Docent> docenten = SqlDocentProvider.getInstance().GetDocenten();
+                Docent d = docenten.get("AVA");
+                System.out.print(d.getNaamVoornaam());
         }
 }
