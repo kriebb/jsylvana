@@ -3,6 +3,7 @@ package Domein;
 import Domein.DocentPackage.Docent;
 import Persistentie.SimpleConnectionPool;
 import Persistentie.SqlDocentProvider;
+import Persistentie.SqlDocentProvider;
 
 import java.sql.*;
 import java.util.Map;
