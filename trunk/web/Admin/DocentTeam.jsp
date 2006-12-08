@@ -35,6 +35,10 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         value="#{docentTeam.ddlProjectOpgave.selectedProjectOpgaveID}" >
             <f:selectItems value="#{docentTeam.ddlProjectOpgave.projectOpgaven}"/>
         </h:selectOneMenu>
+        <br></br>
+        <h:selectOneMenu id="ddlDocentTeams"
+                         immediate="true">
+        </h:selectOneMenu>
     
             
             

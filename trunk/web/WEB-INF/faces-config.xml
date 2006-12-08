@@ -9,15 +9,14 @@
   </managed-bean>
   <managed-bean>
     <managed-bean-name>docentTeam</managed-bean-name>
-    <managed-bean-class>managedBean.DocentTeam</managed-bean-class>
-    <managed-bean-scope>Session</managed-bean-scope>
+    <managed-bean-class>managedBean.Docenten</managed-bean-class>
+    <managed-bean-scope>Application</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>student</managed-bean-name>
-    <managed-bean-class>managedBean.Student</managed-bean-class>
+    <managed-bean-class>managedBean.ViewStudent</managed-bean-class>
     <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
-  
   <navigation-rule>
     <description>
      Als je een project kiest, moet er een autopostback gebeuren
@@ -28,22 +27,21 @@
       <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
     </navigation-case>
     <navigation-case>
-        <from-action>viewProjectOpgave.editCurrentRow</from-action>
-        <from-outcome>success</from-outcome>
-        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+      <from-action>viewProjectOpgave.editCurrentRow</from-action>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
     </navigation-case>
-        <navigation-case>
-        <from-action>viewProjectOpgave.deleteCurrentRow</from-action>
-        <from-outcome>success</from-outcome>
-        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+    <navigation-case>
+      <from-action>viewProjectOpgave.deleteCurrentRow</from-action>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
     </navigation-case>
-            <navigation-case>
-        <from-action>viewProjectOpgave.checkInsert</from-action>
-        <from-outcome>success</from-outcome>
-        <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
+    <navigation-case>
+      <from-action>viewProjectOpgave.checkInsert</from-action>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/Admin/ProjectOpgave.jsp</to-view-id>
     </navigation-case>
-</navigation-rule>
-  
+  </navigation-rule>
   <navigation-rule>
     <description>
         Als je een projectopgave kiest, moet er een autopostback gebeuren
@@ -64,5 +62,4 @@
       <to-view-id>/Admin/Student.jsp</to-view-id>
     </navigation-case>
   </navigation-rule>
-  
 </faces-config>
