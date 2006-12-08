@@ -13,6 +13,10 @@ import Domein.DomeinController;
 import Domein.ProjectPackage.Project;
 import Domein.ProjectPackage.ProjectOpgave;
 import Utils.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -58,6 +62,11 @@ public class ViewProjectOpgave
             FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
             result = false;
         }
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
+            result = false;
+        }
         finally
         {
             if(!result)
@@ -84,8 +93,26 @@ public class ViewProjectOpgave
     }
     public Object[] getProjectOpgaveBySelectedProjectID()
     {
-        return DomeinController.getInstance().getProjectBeheerder().GetOpgavenByProjectId(ddlProject.getSelectedProjectID()).toArray() ;
+        try
+        {
+        List<ProjectOpgave> col = new ArrayList<ProjectOpgave>(DomeinController.getInstance().getProjectBeheerder().GetOpgavenByProjectId(ddlProject.getSelectedProjectID())) ;
+    Collections.sort(col,new ProjectOpgaveComparator());
+    return col.toArray();
+        }        
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
+        }
+        return new Object[1];
+    }   
+
+    private class ProjectOpgaveComparator implements Comparator {
+    public int compare(Object obj1, Object obj2)
+    {        
+      return (((ProjectOpgave)obj1).getOpgaveTitel().compareToIgnoreCase(((ProjectOpgave)obj2).getOpgaveTitel()));
     }
+        }
+
     
     public boolean isDrilldownTableVisible()
     {
@@ -128,6 +155,12 @@ public class ViewProjectOpgave
         {
             FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
             result=false;
+        }
+        
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
+            result = false;
         }
         finally
         {
@@ -176,6 +209,12 @@ public class ViewProjectOpgave
         {
             FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
             result=false;
+        }
+        
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage("fout",new FacesMessage(ex.getMessage()));
+            result = false;
         }
         finally
         {
@@ -374,5 +413,5 @@ public class ViewProjectOpgave
     
     
     
-    
+            
 }
