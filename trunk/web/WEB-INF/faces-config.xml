@@ -51,6 +51,23 @@
       <from-action>#{docentTeam.ddlProjectOpgave.ddlProjectOpgaveChanged}</from-action>
       <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
+    <navigation-case>
+        <from-action>#{docentTeam.ddlDocentTeamChanged}</from-action>
+        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>nieuw</from-outcome>
+        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>verwijder</from-outcome>
+        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>update</from-outcome>
+        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+    </navigation-case>
+    
   </navigation-rule>
   <navigation-rule>
     <description>

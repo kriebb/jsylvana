@@ -25,7 +25,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
        value="#{docentTeam.ddlProjectOpgave.selectedProjectID}" >
             <f:selectItems value="#{docentTeam.ddlProjectOpgave.projecten}"/>
     </h:selectOneMenu>
-    <br /><br />
+    <br />
+    <br />
     <!--Moet die immediate daar staan?-->      
         <h:selectOneMenu id="ddlProjectOpgaven" 
         immediate="true" 
@@ -35,14 +36,38 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         value="#{docentTeam.ddlProjectOpgave.selectedProjectOpgaveID}" >
             <f:selectItems value="#{docentTeam.ddlProjectOpgave.projectOpgaven}"/>
         </h:selectOneMenu>
-        <br></br>
+        <br />
+        <br />
         <h:selectOneMenu id="ddlDocentTeams"
-                         immediate="true">
+                         immediate="true"
+                         rendered="#{docentTeam.selectDocentTeamID> -1}"
+                         onchange="this.form.submit();"
+                         valueChangeListener="#{docentTeam.ddlDocentTeamsChanged}"
+                         value="#{docentTeam.selectDocentTeamID}" >
+                         <f:selectItems value="#{docentTeam.docentTeams}"/>
+                          
         </h:selectOneMenu>
-    
-            
-            
-          
+        <br/>
+        <h:commandButton styleClass="button" value="Nieuw docentteam" action="nieuw" />
+        <h:commandButton styleClass="button" value="verwijder docentteam" action="verwijder" />
+        <br/>
+         <%--   <h:dataTable>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Projectluik"/>
+                    </f:facet>
+                    <f:selectItems />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:selectOneMenu id="ddlDocenten">
+                            <f:selectItems />
+                        </h:selectOneMenu>
+                    </f:facet>
+                </h:column>
+            </h:dataTable> --%>
+        <br/>
+        <h:commandButton styleClass="button" value="Update" action="update" />
         </h:form>
-    </f:view>    
+    </f:view>
 <%@ include file="../MasterPage/bottom.html" %>
