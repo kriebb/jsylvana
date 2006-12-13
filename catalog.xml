@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+<system systemId="http://localhost:8084/pas_sylvana_java/OfferProjecten?wsdl" uri="src/conf/xml-resources/web-service-references/OfferProjecten/wsdl/localhost_8084/pas_sylvana_java/OfferProjecten.wsdl"/>
+<system systemId="http://localhost:8084/pas_sylvana_java/OfferProjecten?xsd=1" uri="src/conf/xml-resources/web-service-references/OfferProjecten/wsdl/localhost_8084/pas_sylvana_java/OfferProjecten.xsd_1.xsd"/>
+<system systemId="http://localhost:1218/Pas_Sylvana/StudentService.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/StudentService.asmx/wsdl/localhost_1218/Pas_Sylvana/StudentService.asmx.wsdl"/>
+</catalog>

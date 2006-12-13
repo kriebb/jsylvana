@@ -8,7 +8,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%> 
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%> 
-<%@taglib uri="http://sourceforge.net/projects/jsf-comp/clientvalidators" prefix="cv"%>
+
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -82,7 +82,6 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                     <tr>
                         <td><h:outputText value="Titel:"/></td>
                         <td><h:inputText  id="inputTitel"   value="#{viewProjectOpgave.selectedProjectOpgave.opgaveTitel}" ></h:inputText>
-                        <cv:requiredFieldValidator componentToValidate="inputTitel" highlight="true" display="dynamic" errorMessage="Verplicht veld!"/>
                         </td>
                     </tr>
                     <tr>
@@ -93,8 +92,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                     <tr>
                         <td><h:outputText value="Aantal Groepen:"/></td>
                         <td><h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}"></h:inputText>
-                            <cv:regularExpressionValidator componentToValidate="inputAantalGroepen" pattern="[0-9]" highlight="true" errorMessage="Enkel cijfers!"/>
- 
+
                     </td>
                     </tr>
                     <tr>
@@ -102,8 +100,8 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                         <td><h:inputText id="inputStudenten" value="#{viewProjectOpgave.selectedProjectOpgave.aantalStudentenPerGroep}"></h:inputText></td>
                     </tr>
             </table>    
-            <h:commandButton onclick="return validate();" actionListener="#{viewProjectOpgave.checkEdit}" rendered="#{viewProjectOpgave.editMode}"  image="../Images/icon-save.gif"/>
-            <h:commandButton onclick="return validate();" actionListener="#{viewProjectOpgave.checkInsert}" rendered="#{viewProjectOpgave.insertMode}"  image="../Images/icon-save.gif" />          
+            <h:commandButton  actionListener="#{viewProjectOpgave.checkEdit}" rendered="#{viewProjectOpgave.editMode}"  image="../Images/icon-save.gif"/>
+            <h:commandButton  actionListener="#{viewProjectOpgave.checkInsert}" rendered="#{viewProjectOpgave.insertMode}"  image="../Images/icon-save.gif" />          
             <h:commandLink actionListener="#{viewProjectOpgave.cancel}"  value="<img alt='cancel' src='../Images/icon-cancel.gif' border='0'/>"/>             
         
        
@@ -111,7 +109,6 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
          <br/>
             <h:messages styleClass="Validation" id="fout"></h:messages>
         <br/>
-            <cv:scriptGenerator form="hoofd" popup="false" />    
         </h:form>
              
     <br/><br/>
