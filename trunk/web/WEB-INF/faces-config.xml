@@ -17,6 +17,11 @@
     <managed-bean-class>managedBean.ViewStudent</managed-bean-class>
     <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
+    <managed-bean>
+    <managed-bean-name>studentInfo</managed-bean-name>
+    <managed-bean-class>managedBean.StudentInfoBean</managed-bean-class>
+    <managed-bean-scope>Session</managed-bean-scope>
+  </managed-bean>
   <navigation-rule>
     <description>
      Als je een project kiest, moet er een autopostback gebeuren

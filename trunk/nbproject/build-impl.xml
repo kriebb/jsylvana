@@ -279,7 +279,58 @@
     <target name="deps-module-jar" depends="init" if="no.dist.ear.dir" unless="no.deps"/>
     <target name="deps-ear-jar" depends="init" if="dist.ear.dir" unless="no.deps"/>
     <target name="deps-jar" depends="init, deps-module-jar, deps-ear-jar" unless="no.deps"/>
-    <target name="-pre-pre-compile" depends="init,deps-jar">
+    <target name="wsgen-init" depends="init">
+        <mkdir dir="${build.generated.dir}/wsgen/service"/>
+        <mkdir dir="${build.classes.dir.real}"/>
+        <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+            <classpath path="${j2ee.platform.wsgen.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsgen-StudentService" depends="wsgen-init, compile">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="managedBean.StudentService">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
+    <target name="wsgen-init-nonJSR109" depends="init">
+        <mkdir dir="${build.generated.dir}/wsgen/service"/>
+        <mkdir dir="${build.classes.dir.real}"/>
+        <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsgen-StudentService-nonJSR109" depends="wsgen-init-nonJSR109">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" destdir="${build.classes.dir.real}" keep="false" genwsdl="true" sei="managedBean.StudentService">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
+    <target name="wsgen-generate-nonJSR109" depends="wsgen-StudentService-nonJSR109"/>
+    <target name="wsgen-generate" depends="wsgen-StudentService"/>
+    <target name="wsimport-init" depends="init">
+        <mkdir dir="${build.generated.dir}/wsimport/client"/>
+        <mkdir dir="${build.generated.dir}/wsimport/binaries"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsimport-client-check-StudentService.asmx" depends="wsimport-init">
+        <condition property="wsimport-client-StudentService.asmx.notRequired">
+            <available file="${build.generated.dir}/wsimport/client/managedBean" type="dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-StudentService.asmx" depends="wsimport-init,wsimport-client-check-StudentService.asmx" unless="wsimport-client-StudentService.asmx.notRequired">
+        <wsimport sourcedestdir="${build.generated.dir}/wsimport/client" extension="true" package="managedBean" destdir="${build.generated.dir}/wsimport/binaries" wsdl="${basedir}/${conf.dir}/xml-resources/web-service-references/StudentService.asmx/wsdl/localhost_1218/Pas_Sylvana/StudentService.asmx.wsdl" wsdlLocation="http://localhost:1218/Pas_Sylvana/StudentService.asmx?WSDL" catalog="catalog.xml"/>
+        <copy todir="${build.classes.dir.real}">
+            <fileset dir="${build.generated.dir}/wsimport/binaries" includes="**/*.xml"/>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-StudentService.asmx" depends="-init-project">
+        <delete dir="${build.generated.dir}/wsimport/client/managedBean"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-StudentService.asmx"/>
+    <target name="wsimport-client-compile" depends="-pre-pre-compile">
+        <webproject2:javac srcdir="${build.generated.dir}/wsimport/client" classpath="${j2ee.platform.wsimport.classpath}:${javac.classpath}" destdir="${build.classes.dir.real}"/>
+    </target>
+    <target name="-pre-pre-compile" depends="init,deps-jar,wsimport-client-generate">
         <mkdir dir="${build.classes.dir.real}"/>
     </target>
     <target name="-pre-compile">
@@ -291,7 +342,7 @@
             <fileset excludes="${build.web.excludes}" dir="${web.docbase.dir}"/>
         </copy>
     </target>
-    <target name="-do-compile" depends="init, deps-jar, -pre-pre-compile, -pre-compile, -copy-manifest, -copy-persistence-xml, -copy-webdir, library-inclusion-in-archive,library-inclusion-in-manifest" if="have.sources">
+    <target name="-do-compile" depends="init, deps-jar, -pre-pre-compile, -pre-compile, -copy-manifest, -copy-persistence-xml, -copy-webdir, library-inclusion-in-archive,library-inclusion-in-manifest,wsimport-client-compile" if="have.sources">
         <webproject2:javac destdir="${build.classes.dir.real}"/>
         <copy todir="${build.classes.dir.real}">
             <fileset dir="${src.dir}" excludes="${build.classes.excludes}"/>
@@ -309,7 +360,7 @@
             <fileset dir="${conf.dir}" includes="persistence.xml"/>
         </copy>
     </target>
-    <target name="-post-compile">
+    <target name="-post-compile" depends="wsgen-generate-nonJSR109">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
     </target>
@@ -318,7 +369,7 @@
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
     </target>
-    <target name="-do-compile-single" depends="init,deps-jar,-pre-pre-compile">
+    <target name="-do-compile-single" depends="init,deps-jar,-pre-pre-compile,wsimport-client-compile">
         <fail unless="javac.includes">Must select some files in the IDE or set javac.includes</fail>
         <webproject2:javac>
             <customize>
@@ -414,11 +465,39 @@
         <copy-ear-war file="${file.reference.ehcache-1.2.4RC.jar}" propname="included.lib.file.reference.ehcache-1.2.4RC.jar.X"/>
         <basename property="included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar" file="${file.reference.mysql-connector-java-5.0.4-bin.jar}"/>
         <copy-ear-war file="${file.reference.mysql-connector-java-5.0.4-bin.jar}" propname="included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar.X"/>
-        <basename property="included.lib.file.reference.clientvalidators-0.9.1.jar" file="${file.reference.clientvalidators-0.9.1.jar}"/>
-        <copy-ear-war file="${file.reference.clientvalidators-0.9.1.jar}" propname="included.lib.file.reference.clientvalidators-0.9.1.jar.X"/>
+        <basename property="included.lib.libs.jaxws20.classpath.15" file="${libs.jaxws20.classpath.libfile.15}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.14" file="${libs.jaxws20.classpath.libfile.14}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.13" file="${libs.jaxws20.classpath.libfile.13}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.12" file="${libs.jaxws20.classpath.libfile.12}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.11" file="${libs.jaxws20.classpath.libfile.11}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.10" file="${libs.jaxws20.classpath.libfile.10}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.9" file="${libs.jaxws20.classpath.libfile.9}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.8" file="${libs.jaxws20.classpath.libfile.8}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.7" file="${libs.jaxws20.classpath.libfile.7}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.6" file="${libs.jaxws20.classpath.libfile.6}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.5" file="${libs.jaxws20.classpath.libfile.5}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.4" file="${libs.jaxws20.classpath.libfile.4}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.3" file="${libs.jaxws20.classpath.libfile.3}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.2" file="${libs.jaxws20.classpath.libfile.2}"/>
+        <basename property="included.lib.libs.jaxws20.classpath.1" file="${libs.jaxws20.classpath.libfile.1}"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.15}" propname="included.lib.libs.jaxws20.classpath.15.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.14}" propname="included.lib.libs.jaxws20.classpath.14.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.13}" propname="included.lib.libs.jaxws20.classpath.13.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.12}" propname="included.lib.libs.jaxws20.classpath.12.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.11}" propname="included.lib.libs.jaxws20.classpath.11.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.10}" propname="included.lib.libs.jaxws20.classpath.10.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.9}" propname="included.lib.libs.jaxws20.classpath.9.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.8}" propname="included.lib.libs.jaxws20.classpath.8.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.7}" propname="included.lib.libs.jaxws20.classpath.7.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.6}" propname="included.lib.libs.jaxws20.classpath.6.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.5}" propname="included.lib.libs.jaxws20.classpath.5.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.4}" propname="included.lib.libs.jaxws20.classpath.4.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.3}" propname="included.lib.libs.jaxws20.classpath.3.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.2}" propname="included.lib.libs.jaxws20.classpath.2.X"/>
+        <copy-ear-war file="${libs.jaxws20.classpath.libfile.1}" propname="included.lib.libs.jaxws20.classpath.1.X"/>
         <mkdir dir="${build.web.dir.real}/META-INF"/>
         <manifest file="${build.web.dir.real}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} ${included.lib.file.reference.clientvalidators-0.9.1.jar} "/>
+            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} ${included.lib.libs.jaxws20.classpath.1.X} ${included.lib.libs.jaxws20.classpath.2.X} ${included.lib.libs.jaxws20.classpath.3.X} ${included.lib.libs.jaxws20.classpath.4.X} ${included.lib.libs.jaxws20.classpath.5.X} ${included.lib.libs.jaxws20.classpath.6.X} ${included.lib.libs.jaxws20.classpath.7.X} ${included.lib.libs.jaxws20.classpath.8.X} ${included.lib.libs.jaxws20.classpath.9.X} ${included.lib.libs.jaxws20.classpath.10.X} ${included.lib.libs.jaxws20.classpath.11.X} ${included.lib.libs.jaxws20.classpath.12.X} ${included.lib.libs.jaxws20.classpath.13.X} ${included.lib.libs.jaxws20.classpath.14.X} ${included.lib.libs.jaxws20.classpath.15.X} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
@@ -433,7 +512,21 @@
         <copy file="${libs.jstl11.classpath.libfile.1}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${file.reference.ehcache-1.2.4RC.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${file.reference.mysql-connector-java-5.0.4-bin.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
-        <copy file="${file.reference.clientvalidators-0.9.1.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.15}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.14}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.13}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.12}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.11}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.10}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.9}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.8}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.7}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.6}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.5}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.4}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.3}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.2}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${libs.jaxws20.classpath.libfile.1}" todir="${build.web.dir.real}/WEB-INF/lib"/>
     </target>
     <target name="do-ear-dist" depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest">
         <dirname property="dist.jar.dir" file="${dist.ear.war}"/>
