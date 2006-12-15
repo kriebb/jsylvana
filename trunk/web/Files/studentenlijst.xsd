@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="studentenlijst" type="studentenlijstType"/>
+	<xs:element name="student" type="studentType"/>
+	<xs:element name="studentnummer" type="studentnummerType"/>
+	<xs:element name="naam" type="xs:string"/>
+	<xs:element name="voornaam" type="xs:string"/>
+	<xs:element name="email" type="emailType"/>
+	<xs:element name="studiejaar" type="xs:string"/>
+	<xs:element name="paswoord" type="xs:string"/>
+	<xs:element name="projecten" type="projectenType"/>
+	<xs:element name="project" type="projectType"/>
+	<xs:attribute name="id" type="xs:int"/>
+	<xs:complexType name="studentenlijstType">
+	<xs:sequence>
+	<xs:element ref="student" maxOccurs="unbounded"/>
+	</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="studentType">
+		<xs:sequence>
+			<xs:element ref="studentnummer"/>
+			<xs:element ref="naam"/>
+			<xs:element ref="voornaam"/>
+			<xs:element ref="email"/>
+			<xs:element ref="studiejaar"/>
+			<xs:element ref="paswoord"/>
+			<xs:element ref="projecten" minOccurs="0"/> 
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="studentnummerType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="emailType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+(\.[A-Za-z0-9!#-'\*\+\-/=\?\^_`\{-~]+)*@student.hogent.be"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="projectenType">
+	<xs:sequence>
+			<xs:element ref="project" maxOccurs="unbounded"/>
+	</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="projectType">
+		<xs:attribute ref="id" use="required"/>
+	</xs:complexType>
+	</xs:schema>
+	

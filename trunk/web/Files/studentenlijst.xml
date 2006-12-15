@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentenlijst xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="studentenlijst.xsd">
+	<student>
+		<!--student bevat steeds 1 studentnummer, 1 naam, 1 voornaam, 1 email, 1 studiejaar, 1 paswoord en mogelijk 1 projecten tag en wel in die volgorde-->
+		<studentnummer>20060001</studentnummer>
+		<naam>Janssens</naam>
+		<voornaam>Pieter</voornaam>
+		<email>Pieter.Janssens@student.hogent.be</email>
+		<studiejaar>1</studiejaar>
+		<paswoord>abcdefg</paswoord>
+		<!-- tag projecten komt voor enkel en alleen als de student een geindividualiseerd studietraject volgt-->
+		<projecten>
+			<!-- id komt overeen met het projectid uit de tabel projecten-->
+			<project id="1"/>
+			<project id="2"/>
+		</projecten>
+	</student>
+	<student>
+		<studentnummer>20060002</studentnummer>
+		<naam>Janssens</naam>
+		<voornaam>An</voornaam>
+		<email>An.Janssens@student.hogent.be</email>
+		<studiejaar>1</studiejaar>
+		<paswoord>xyzuvw</paswoord>
+	</student>
+</studentenlijst>
