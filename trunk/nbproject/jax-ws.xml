@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="OfferStudentServiceToASP">
+      <implementation-class>managedBean.OfferStudentServiceToASP</implementation-class>
+    </service>
+  </services>
+  <clients>
+    <client name="StudentService.asmx">
+      <wsdl-url>http://localhost:1218/Pas_Sylvana/StudentService.asmx?WSDL</wsdl-url>
+      <local-wsdl-file>localhost_1218/Pas_Sylvana/StudentService.asmx.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">managedBean</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+    </client>
+  </clients>
+  <jsr109>false</jsr109>
+</jax-ws>

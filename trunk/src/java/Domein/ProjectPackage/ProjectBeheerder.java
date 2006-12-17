@@ -123,7 +123,7 @@ public class ProjectBeheerder
     
     /** KRS: CODE AANGEPAST*/
     public Boolean MakeProjectOpgave(ProjectOpgave opgave) throws ApplicationException
-    {
+    {        
         Cache.getInstance().purgeCache("projectopgave_projectid=" + opgave.getProjectID());
         if (normalValidation(opgave))
         {

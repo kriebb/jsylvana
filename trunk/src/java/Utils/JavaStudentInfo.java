@@ -1,11 +1,12 @@
+package Utils;
 import java.util.ArrayList;
 import java.util.List;
-public class StudentInfo
+public class JavaStudentInfo
 {
-	public StudentInfo()
+	public JavaStudentInfo()
 	{
-        setProjecten(new ArrayList<Integer>());
-        setTraject(false);
+        setProject(new ArrayList<Integer>());
+        setGeindividualiseerdTraject(false);
 	}
 
     private int studentnr;
@@ -19,10 +20,10 @@ public class StudentInfo
     private String paswoord;
 
 
-    private boolean traject;
+    private boolean geindividualiseerdTraject;
 
 
-    private List<Integer> projecten;
+    private List<Integer> project;
 
     public int getStudentnr()
     {
@@ -84,24 +85,24 @@ public class StudentInfo
         this.paswoord = paswoord;
     }
 
-    public boolean isTraject()
+    public boolean isGeindividualiseerdTraject()
     {
-        return traject;
+        return geindividualiseerdTraject;
     }
 
-    public void setTraject(boolean traject)
+    public void setGeindividualiseerdTraject(boolean traject)
     {
-        this.traject = traject;
+        this.geindividualiseerdTraject = traject;
     }
 
-    public List<Integer> getProjecten()
+    public List<Integer> getProject()
     {
-        return projecten;
+        return project;
     }
 
-    public void setProjecten(List<Integer> projecten)
+    public void setProject(List<Integer> projecten)
     {        
-        this.projecten = projecten;
+        this.project = projecten;
     }
 
 }

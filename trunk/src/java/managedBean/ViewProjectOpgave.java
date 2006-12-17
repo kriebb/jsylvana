@@ -133,7 +133,7 @@ public class ViewProjectOpgave
     }
     public void cancel(ActionEvent e)
     {
-        selectRow = -1;
+        selectRow = 0;
         setDrilldownTableVisible(false);
         setEditMode(false);
         setInsertMode(true);
@@ -389,7 +389,7 @@ public class ViewProjectOpgave
         this.setDrilldownTableVisible(true);
         this.setEditMode(false);
         this.updatedOpgave=null;
-        this.selectRow=-1;
+        this.selectRow=0;
         this.vorigProject=ddlProject.getSelectedProjectID();
         this.setInsertMode(true);
         FacesContext.getCurrentInstance().renderResponse();
