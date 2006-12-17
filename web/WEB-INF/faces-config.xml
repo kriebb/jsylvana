@@ -17,9 +17,9 @@
     <managed-bean-class>managedBean.ViewStudent</managed-bean-class>
     <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
-    <managed-bean>
+  <managed-bean>
     <managed-bean-name>studentInfo</managed-bean-name>
-    <managed-bean-class>managedBean.StudentInfoBean</managed-bean-class>
+    <managed-bean-class>managedBean.ViewWebservice</managed-bean-class>
     <managed-bean-scope>Session</managed-bean-scope>
   </managed-bean>
   <navigation-rule>
@@ -57,22 +57,21 @@
       <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
     <navigation-case>
-        <from-action>#{docentTeam.ddlDocentTeamChanged}</from-action>
-        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+      <from-action>#{docentTeam.ddlDocentTeamChanged}</from-action>
+      <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
     <navigation-case>
-        <from-outcome>nieuw</from-outcome>
-        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+      <from-outcome>nieuw</from-outcome>
+      <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
     <navigation-case>
-        <from-outcome>verwijder</from-outcome>
-        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+      <from-outcome>verwijder</from-outcome>
+      <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
     <navigation-case>
-        <from-outcome>update</from-outcome>
-        <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
+      <from-outcome>update</from-outcome>
+      <to-view-id>/Admin/DocentTeam.jsp</to-view-id>
     </navigation-case>
-    
   </navigation-rule>
   <navigation-rule>
     <description>

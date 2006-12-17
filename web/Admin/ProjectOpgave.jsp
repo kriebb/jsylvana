@@ -8,6 +8,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h"%> 
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f"%> 
+<%@taglib uri="http://sourceforge.net/projects/jsf-comp/clientvalidators" prefix="cv"%>
 
 
 
@@ -75,13 +76,14 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         <br/>
 
         <br/>
-        <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible &&  viewProjectOpgave.ddlProject.selectedProjectID>-1 && !viewProjectOpgave.projectVeranderd}">
+        <f:subview id="drilldown" rendered="#{viewProjectOpgave.drilldownTableVisible &&  viewProjectOpgave.ddlProject.selectedProjectID>-1 && !viewProjectOpgave.projectVeranderd && viewProjectOpgave.selectRow>-1}">
             <h:outputLabel value="<div align='center'> ...Maak een projectopgave aan...</div>" styleClass="message" rendered="#{viewProjectOpgave.insertMode}"/>                             
             <h:outputLabel styleClass="message" rendered="#{viewProjectOpgave.editMode}" value="<div align='center'> ...Wijzig deze projectopgave aan...</div>"/>
             <table>
                     <tr>
                         <td><h:outputText value="Titel:"/></td>
                         <td><h:inputText  id="inputTitel"   value="#{viewProjectOpgave.selectedProjectOpgave.opgaveTitel}" ></h:inputText>
+                            <cv:requiredFieldValidator componentToValidate="inputTitel" highlight="true" display="dynamic" errorMessage="Verplicht" style="Validation"/>
                         </td>
                     </tr>
                     <tr>
@@ -91,18 +93,22 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                     </tr>
                     <tr>
                         <td><h:outputText value="Aantal Groepen:"/></td>
-                        <td><h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}"></h:inputText>
-
+                        <td><h:inputText id="inputAantalGroepen" value="#{viewProjectOpgave.selectedProjectOpgave.aantalGroepen}" onkeypress="keyPressNumber(false);"></h:inputText>
+                            <cv:requiredFieldValidator componentToValidate="inputAantalGroepen" highlight="true" display="dynamic" errorMessage="Gelieve een getal in te vullen!" style="Validation"/>
                     </td>
                     </tr>
                     <tr>
                         <td><h:outputText value="Aantal Studenten Per Groep:"/></td>
-                        <td><h:inputText id="inputStudenten" value="#{viewProjectOpgave.selectedProjectOpgave.aantalStudentenPerGroep}"></h:inputText></td>
+                        <td><h:inputText id="inputStudenten" value="#{viewProjectOpgave.selectedProjectOpgave.aantalStudentenPerGroep}" onkeypress="keyPressNumber(false);" ></h:inputText>
+                        <cv:requiredFieldValidator componentToValidate="inputStudenten" highlight="true" display="dynamic" errorMessage="Gelieve een getal in te vullen!" style="Validation"/>
+                    </td>
                     </tr>
             </table>    
-            <h:commandButton  actionListener="#{viewProjectOpgave.checkEdit}" rendered="#{viewProjectOpgave.editMode}"  image="../Images/icon-save.gif"/>
-            <h:commandButton  actionListener="#{viewProjectOpgave.checkInsert}" rendered="#{viewProjectOpgave.insertMode}"  image="../Images/icon-save.gif" />          
+            <h:commandButton  onclick="return validate();"  actionListener="#{viewProjectOpgave.checkEdit}" rendered="#{viewProjectOpgave.editMode}"  image="../Images/icon-save.gif"/>
+            <h:commandButton  onclick="return validate();"  actionListener="#{viewProjectOpgave.checkInsert}" rendered="#{viewProjectOpgave.insertMode}"  image="../Images/icon-save.gif" />          
             <h:commandLink actionListener="#{viewProjectOpgave.cancel}"  value="<img alt='cancel' src='../Images/icon-cancel.gif' border='0'/>"/>             
+            <cv:scriptGenerator popup="false"  form="drilldown"/>
+
         
        
         </f:subview>

@@ -286,8 +286,8 @@
             <classpath path="${j2ee.platform.wsgen.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsgen-StudentService" depends="wsgen-init, compile">
-        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="managedBean.StudentService">
+    <target name="wsgen-OfferStudentServiceToASP" depends="wsgen-init, compile">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="managedBean.OfferStudentServiceToASP">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
@@ -298,13 +298,13 @@
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsgen-StudentService-nonJSR109" depends="wsgen-init-nonJSR109">
-        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" destdir="${build.classes.dir.real}" keep="false" genwsdl="true" sei="managedBean.StudentService">
+    <target name="wsgen-OfferStudentServiceToASP-nonJSR109" depends="wsgen-init-nonJSR109">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" destdir="${build.classes.dir.real}" keep="false" genwsdl="true" sei="managedBean.OfferStudentServiceToASP">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
-    <target name="wsgen-generate-nonJSR109" depends="wsgen-StudentService-nonJSR109"/>
-    <target name="wsgen-generate" depends="wsgen-StudentService"/>
+    <target name="wsgen-generate-nonJSR109" depends="wsgen-OfferStudentServiceToASP-nonJSR109"/>
+    <target name="wsgen-generate" depends="wsgen-OfferStudentServiceToASP"/>
     <target name="wsimport-init" depends="init">
         <mkdir dir="${build.generated.dir}/wsimport/client"/>
         <mkdir dir="${build.generated.dir}/wsimport/binaries"/>
@@ -495,9 +495,11 @@
         <copy-ear-war file="${libs.jaxws20.classpath.libfile.3}" propname="included.lib.libs.jaxws20.classpath.3.X"/>
         <copy-ear-war file="${libs.jaxws20.classpath.libfile.2}" propname="included.lib.libs.jaxws20.classpath.2.X"/>
         <copy-ear-war file="${libs.jaxws20.classpath.libfile.1}" propname="included.lib.libs.jaxws20.classpath.1.X"/>
+        <basename property="included.lib.file.reference.clientvalidators-0.9.1.jar" file="${file.reference.clientvalidators-0.9.1.jar}"/>
+        <copy-ear-war file="${file.reference.clientvalidators-0.9.1.jar}" propname="included.lib.file.reference.clientvalidators-0.9.1.jar.X"/>
         <mkdir dir="${build.web.dir.real}/META-INF"/>
         <manifest file="${build.web.dir.real}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} ${included.lib.libs.jaxws20.classpath.1.X} ${included.lib.libs.jaxws20.classpath.2.X} ${included.lib.libs.jaxws20.classpath.3.X} ${included.lib.libs.jaxws20.classpath.4.X} ${included.lib.libs.jaxws20.classpath.5.X} ${included.lib.libs.jaxws20.classpath.6.X} ${included.lib.libs.jaxws20.classpath.7.X} ${included.lib.libs.jaxws20.classpath.8.X} ${included.lib.libs.jaxws20.classpath.9.X} ${included.lib.libs.jaxws20.classpath.10.X} ${included.lib.libs.jaxws20.classpath.11.X} ${included.lib.libs.jaxws20.classpath.12.X} ${included.lib.libs.jaxws20.classpath.13.X} ${included.lib.libs.jaxws20.classpath.14.X} ${included.lib.libs.jaxws20.classpath.15.X} "/>
+            <attribute name="Class-Path" value="${included.lib.libs.jsf.classpath.1.X} ${included.lib.libs.jsf.classpath.2.X} ${included.lib.libs.jsf.classpath.3.X} ${included.lib.libs.jsf.classpath.4.X} ${included.lib.libs.jsf.classpath.5.X} ${included.lib.libs.jsf.classpath.6.X} ${included.lib.libs.jstl11.classpath.1.X} ${included.lib.libs.jstl11.classpath.2.X} ${included.lib.file.reference.ehcache-1.2.4RC.jar} ${included.lib.file.reference.mysql-connector-java-5.0.4-bin.jar} ${included.lib.libs.jaxws20.classpath.1.X} ${included.lib.libs.jaxws20.classpath.2.X} ${included.lib.libs.jaxws20.classpath.3.X} ${included.lib.libs.jaxws20.classpath.4.X} ${included.lib.libs.jaxws20.classpath.5.X} ${included.lib.libs.jaxws20.classpath.6.X} ${included.lib.libs.jaxws20.classpath.7.X} ${included.lib.libs.jaxws20.classpath.8.X} ${included.lib.libs.jaxws20.classpath.9.X} ${included.lib.libs.jaxws20.classpath.10.X} ${included.lib.libs.jaxws20.classpath.11.X} ${included.lib.libs.jaxws20.classpath.12.X} ${included.lib.libs.jaxws20.classpath.13.X} ${included.lib.libs.jaxws20.classpath.14.X} ${included.lib.libs.jaxws20.classpath.15.X} ${included.lib.file.reference.clientvalidators-0.9.1.jar} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
@@ -527,6 +529,7 @@
         <copy file="${libs.jaxws20.classpath.libfile.3}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${libs.jaxws20.classpath.libfile.2}" todir="${build.web.dir.real}/WEB-INF/lib"/>
         <copy file="${libs.jaxws20.classpath.libfile.1}" todir="${build.web.dir.real}/WEB-INF/lib"/>
+        <copy file="${file.reference.clientvalidators-0.9.1.jar}" todir="${build.web.dir.real}/WEB-INF/lib"/>
     </target>
     <target name="do-ear-dist" depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest">
         <dirname property="dist.jar.dir" file="${dist.ear.war}"/>

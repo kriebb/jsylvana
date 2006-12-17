@@ -32,6 +32,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                                 <h:outputText value="#{po.studentnr}"/>
                         </h:column>
                     </h:dataTable>
+                    <h:messages styleClass="Validation" id="fout"></h:messages>
     </h:form>
 </f:view>
 
